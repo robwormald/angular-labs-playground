@@ -1,0 +1,16 @@
+load("@npm_bazel_typescript//:index.bzl", "ts_config", "ts_devserver", "ts_library")
+load("@io_bazel_rules_sass//:defs.bzl", "sass_binary")
+
+package(default_visibility = ["//:__subpackages__"])
+
+ts_library(
+	name = "host-app",
+	srcs = [
+		"host-app.ts"
+	]
+)
+
+sass_binary(
+    name = "styles",
+    src = "host-app.scss",
+)

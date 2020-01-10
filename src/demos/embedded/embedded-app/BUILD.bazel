@@ -1,0 +1,45 @@
+load("@npm_angular_bazel//:index.bzl", "ng_module")
+load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
+
+package(default_visibility = ["//:__subpackages__"])
+
+ng_module(
+    name = "embedded-app",
+    srcs = [
+        "embedded-app.ts"
+    ],
+    deps = [
+         "@npm//@angular/core",
+        # "@npm//@angular/platform-browser",
+        # "@npm//@angular/router",
+        # "@npm//@ngrx/store",
+    ],
+)
+
+ng_module(
+    name = "embedded-app-main",
+    srcs = [
+        "main.ts"
+    ],
+    deps = [
+         "@npm//@angular/core",
+		 ":embedded-app"
+        # "@npm//@angular/platform-browser",
+        # "@npm//@angular/router",
+        # "@npm//@ngrx/store",
+    ],
+)
+
+rollup_bundle(
+    name = "bundle",
+    config_file = "rollup.config.js",
+    entry_points = {
+        ":main.ts": "embedded-app",
+    },
+    output_dir = True,
+    deps = [
+        ":embedded-app-main",
+        "@npm//rollup-plugin-commonjs",
+        "@npm//rollup-plugin-node-resolve",
+    ],
+)

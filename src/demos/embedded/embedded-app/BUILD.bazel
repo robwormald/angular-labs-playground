@@ -6,10 +6,12 @@ package(default_visibility = ["//:__subpackages__"])
 ng_module(
     name = "embedded-app",
     srcs = [
-        "embedded-app.ts"
+        "embedded-app.ts",
+        "api-service.ts"
     ],
     deps = [
          "@npm//@angular/core",
+		  "//src/demos/embedded/platform"
         # "@npm//@angular/platform-browser",
         # "@npm//@angular/router",
         # "@npm//@ngrx/store",
@@ -23,8 +25,9 @@ ng_module(
     ],
     deps = [
          "@npm//@angular/core",
+		 "@npm//@angular/platform-browser",
+
 		 ":embedded-app"
-        # "@npm//@angular/platform-browser",
         # "@npm//@angular/router",
         # "@npm//@ngrx/store",
     ],

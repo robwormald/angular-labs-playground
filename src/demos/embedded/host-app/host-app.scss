@@ -54,3 +54,5 @@ embedded-app:not(:defined) {
 	flex: 1;
 	border: 1px solid yellow;
   }
+
+  //notdefined() does not match any child elements of a not-defined parent?!

@@ -1,0 +1,4 @@
+build --define=angular_ivy_enabled=False
+
+build:view-engine --define=angular_ivy_enabled=False
+build:ivy --define=angular_ivy_enabled=True

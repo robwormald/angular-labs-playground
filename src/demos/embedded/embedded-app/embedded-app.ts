@@ -14,6 +14,7 @@ export class EmbeddedApp {
 }
 
 @NgModule({
-	declarations: [EmbeddedApp]
+	declarations: [EmbeddedApp],
+	bootstrap: [EmbeddedApp]
 })
 export class EmbeddedAppModule {}

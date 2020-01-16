@@ -1,17 +1,24 @@
 import {NgModuleFactory, ɵcreateInjector as createInjector} from '@angular/core'
+import {platformBrowser} from '@angular/platform-browser'
 import {EmbeddedApp, EmbeddedAppModule} from './embedded-app';
-import {EmbeddedAppModuleNgFactory} from './embedded-app.ngfactory';
-
-
+import {APIService} from './api-service'
+import {renderComponent, rendererFactory, NgHostElement} from '../platform/index'
 
 
 
 
 function main(){
-	console.info('embedded app starting up...');
 
-	const appInjector = createInjector(EmbeddedAppModule);
-	console.log(appInjector);
+  const sharedInjector = createInjector(EmbeddedAppModule, null, [{provide: APIService, useClass: APIService}]);
+
+
+	customElements.define('embedded-app', class extends NgHostElement {
+    constructor(){
+      super();
+      const v = sharedInjector.get(APIService);
+      console.log(v);
+    }
+  })
 }
 
 

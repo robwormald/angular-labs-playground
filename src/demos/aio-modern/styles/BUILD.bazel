@@ -1,0 +1,11 @@
+load("@io_bazel_rules_sass//:defs.bzl", "sass_library")
+
+package(default_visibility = ["//:__subpackages__"])
+
+sass_library(
+  name = "styles",
+  srcs = [
+    "_constants.scss",
+    "aio-theme.scss"
+  ]
+)

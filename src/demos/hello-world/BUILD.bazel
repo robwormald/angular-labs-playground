@@ -1,0 +1,53 @@
+load("@npm_angular_bazel//:index.bzl", "ng_module")
+load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
+load("@npm_bazel_terser//:index.bzl", "terser_minified")
+load("@npm//history-server:index.bzl", "history_server")
+
+package(default_visibility = ["//:__subpackages__"])
+
+ng_module(
+    name = "hello-world",
+    srcs = [
+        "hello-world.ts"
+    ],
+    deps = [
+      "@npm//@angular/core",
+		  "//src/platform"
+        # "@npm//@angular/platform-browser",
+        # "@npm//@angular/router",
+        # "@npm//@ngrx/store",
+    ],
+)
+
+rollup_bundle(
+    name = "bundle",
+    config_file = "rollup.config.js",
+    entry_points = {
+        ":hello-world.ts": "hello-world",
+    },
+    output_dir = True,
+    deps = [
+        ":hello-world",
+        "//src/platform",
+        "@npm//rollup-plugin-commonjs",
+        "@npm//rollup-plugin-node-resolve",
+    ],
+)
+
+terser_minified(
+    name = "prod",
+    src = ":bundle",
+)
+
+history_server(
+  name = "server",
+  data = [
+    ":index.html",
+    ":bundle",
+    ":prod"
+  ],
+  templated_args = [
+
+        "src/demos/hello-world",
+    ],
+)

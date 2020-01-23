@@ -1,0 +1,17 @@
+load("@npm_angular_bazel//:index.bzl", "ng_module")
+load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
+
+package(default_visibility = ["//:__subpackages__"])
+
+ng_module(
+    name = "platform",
+    srcs = [
+      "platform.ts",
+      "component_host.ts",
+      "styles.ts",
+      "host_element.ts"
+    ],
+    deps = [
+         "@npm//@angular/core"
+    ],
+)

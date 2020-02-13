@@ -1,0 +1,49 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+	box-sizing: border-box;
+}
+img {
+	max-width: 100%; display: block;
+}
+body {
+	font: 1.2em Helvetica, arial, sans-serif;
+}
+a:link, a:visited {
+	text-decoration: none;
+	color: #f08c00;
+}
+
+search-app {
+	display: block;
+}
+.results {
+	list-style: none;
+	margin: 2em;
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: repeat(auto-fill,minmax(200px, 1fr));
+}
+.results h4 {
+	background-color:darkgrey;
+	color: #fff;
+	text-align: center;
+	margin: 0;
+	padding: 2px;
+}
+.results li {
+	border: 1px solid #ffe066;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	height: 200px;
+}
+.results .cta {
+	margin-top: auto;
+	border-top: 1px solid #ffe066;
+	padding: 10px;
+	text-align: center;
+}
+.results .body {
+	padding: 10px;
+}
+

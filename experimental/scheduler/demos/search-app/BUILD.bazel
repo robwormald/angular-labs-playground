@@ -1,0 +1,72 @@
+load("@npm_angular_bazel//:index.bzl", "ng_module")
+load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
+load("@build_bazel_rules_nodejs//:index.bzl", "pkg_web")
+load("@npm//history-server:index.bzl", "history_server")
+load("@npm_bazel_terser//:index.bzl", "terser_minified")
+
+package(default_visibility = ["//:__subpackages__"])
+
+ng_module(
+    name = "search-app",
+    srcs = [
+        "app.ts",
+        "youtube.ts",
+        "utils.ts",
+        "repeat.ts"
+    ],
+
+    deps = [
+         "@npm//@angular/core",
+         "@npm//rxjs"
+    ],
+)
+
+ng_module(
+  name = "main",
+  srcs = [
+      "main.ts"
+  ],
+  deps = [
+    "@npm//@angular/core",
+    ":search-app"
+  ],
+)
+
+rollup_bundle(
+  name = "bundle",
+  config_file = "rollup.config.js",
+  entry_points = {
+      ":main.ts": "search-app",
+  },
+  output_dir = True,
+  deps = [
+      ":main",
+      "@npm//rollup-plugin-commonjs",
+      "@npm//rollup-plugin-node-resolve",
+  ],
+)
+
+terser_minified(
+    name = "bundle.min",
+    src = ":bundle",
+)
+
+
+pkg_web(
+    name = "pkg",
+    srcs = [
+      ":bundle",
+      ":bundle.min",
+      "index.html",
+      "styles.css"
+    ],
+)
+
+history_server(
+    name = "server",
+    data = [":pkg"],
+    templated_args = [
+        "-a",
+        "experimental/scheduler/demos/search-app/pkg",
+    ],
+)
